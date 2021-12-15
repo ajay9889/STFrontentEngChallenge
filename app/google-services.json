@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "869562181167",
+    "project_id": "synpulse-3db00",
+    "storage_bucket": "synpulse-3db00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869562181167:android:48ebd20e24c26615b348da",
+        "android_client_info": {
+          "package_name": "com.synpulse.companydata.stfrontentengchallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869562181167-ic74fh885ge21rlqlfcbfg6vrnosgf9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.synpulse.companydata.stfrontentengchallenge",
+            "certificate_hash": "cdc4c74f8ce91cbf1231158225551a9ae7a46a6d"
+          }
+        },
+        {
+          "client_id": "869562181167-rj4qsvrt28o4lk1occ0jh7q8i02flvi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq7lJ2nWv45k_1v4ojc2trahj3qtIZz-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869562181167-rj4qsvrt28o4lk1occ0jh7q8i02flvi9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
