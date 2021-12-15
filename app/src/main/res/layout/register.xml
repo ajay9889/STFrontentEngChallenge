@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgcolorgradient">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inputBoxContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        app:layout_constraintVertical_bias="0.3"
+        android:background="@drawable/whitbox_shadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Presentation.Fragments.FirstFragment">
+
+        <TextView
+            android:id="@+id/titleMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_otp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3"/>
+
+        <com.synpulse.companydata.stfrontentengchallenge.Core.CutomUI.PinEntryView
+            android:id="@+id/verify_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
+            android:textAlignment="center"
+            app:accentType="character"
+            app:digitBackground="@drawable/grey_light_round"
+            app:digitHeight="@dimen/box_digit"
+            app:digitSpacing="@dimen/pin_spacing"
+            app:digitTextColor="@color/black"
+            app:digitTextSize="@dimen/ds_text_size_medium"
+            app:digitWidth="@dimen/box_digit"
+            app:mask="⚪"
+            app:numDigits="4"
+            app:pinAccentColor="@color/colorAccent"
+            app:pinInputType="number"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleMessage"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/alreadyAccnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/inputBoxContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/didn_rec_otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputBoxContainer" />
+
+    <TextView
+        android:id="@+id/resendOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resendotp"
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alreadyAccnt" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="@dimen/btn_size"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:text="@string/register"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/alreadyAccnt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
