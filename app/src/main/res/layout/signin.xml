@@ -11,7 +11,7 @@
         android:id="@+id/mainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
+        android:text="@string/sign_ins"
         app:layout_constraintBottom_toTopOf="@+id/inputBoxContainer"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
             android:id="@+id/titleMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_mobile_number"
+            android:text="@string/verify_accnt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,17 +67,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/inputBoxContainer"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/already_existing_user"
+        android:text="@string/dont_accnt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputBoxContainer" />
 
     <TextView
-        android:id="@+id/signIn"
+        android:id="@+id/signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signin"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+        android:text="@string/register"
+        app:layout_constraintBottom_toTopOf="@id/buttonSignIN"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
         app:layout_constraintVertical_bias="0.2"
@@ -85,11 +85,11 @@
         app:layout_constraintTop_toBottomOf="@id/alreadyAccnt" />
 
     <Button
-        android:id="@+id/button_first"
+        android:id="@+id/buttonSignIN"
         android:layout_width="@dimen/btn_size"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg"
-        android:text="@string/submit"
+        android:text="@string/signin"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/alreadyAccnt"
         app:layout_constraintBottom_toBottomOf="parent"

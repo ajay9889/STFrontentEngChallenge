@@ -9,6 +9,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.synpulse.companydata.Core.base.BaseAppActivity
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.ActivityMainBinding
@@ -24,6 +26,8 @@ class MainActivity : BaseAppActivity<ActivityMainBinding>(ActivityMainBinding::i
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)

@@ -3,11 +3,15 @@ package com.synpulse.companydata.stfrontentengchallenge.KoinDepInject
 import com.synpulse.companydata.Core.networkutils.CacheInterceptor
 import com.synpulse.companydata.Core.networkutils.OnlineCacheInterceptor
 import com.synpulse.companydata.stfrontentengchallenge.BuildConfig
+import com.synpulse.companydata.stfrontentengchallenge.MainApplication
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -42,4 +46,8 @@ val appModule = module {
 
 }
 val viewModelModule = module {
+
+    viewModel {
+        UserSignInViewModel(androidApplication() as MainApplication)
+    }
 }
