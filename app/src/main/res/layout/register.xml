@@ -44,15 +44,16 @@
             app:layout_constraintVertical_bias="0.2"/>
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/editTextEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="14"
-            android:inputType="phone"
-            android:digits="0123456789+"
+            android:inputType="textEmailAddress"
+
             android:gravity="center"
             android:textStyle="bold"
-            android:hint="Mobile Number"
+            android:textColorHint="@color/grey_transparent_layout"
+            android:hint="You Email"
             android:imeOptions="actionNext"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -66,17 +67,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="14"
-            android:inputType="phone"
-            android:digits="0123456789+"
+            android:inputType="textPassword"
+
             android:gravity="center"
             android:textStyle="bold"
             android:imeOptions="actionDone"
             android:hint="Enter Password"
+            android:textColorHint="@color/grey_transparent_layout"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextPhone" />
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -42,7 +42,7 @@
             app:layout_constraintVertical_bias="0.3"/>
 
         <com.synpulse.companydata.stfrontentengchallenge.Core.CutomUI.PinEntryView
-            android:id="@+id/verify_pin"
+            android:id="@+id/verifyOTP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/resendotp"
-        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
         app:layout_constraintVertical_bias="0.2"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@id/alreadyAccnt" />
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnSubmit"
         android:layout_width="@dimen/btn_size"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg"

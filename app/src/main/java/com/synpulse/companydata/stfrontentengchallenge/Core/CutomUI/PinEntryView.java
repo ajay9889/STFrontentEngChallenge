@@ -411,10 +411,7 @@ public class PinEntryView extends ViewGroup {
         editText.setCursorVisible(false);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(digits)});
         editText.setInputType(inputType);
-        try{
-            editText.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Bold.ttf"), Typeface.BOLD);
-        }catch(Exception e){e.printStackTrace();}
-        finally {
+         {
 
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             editText.setOnFocusChangeListener(new OnFocusChangeListener() {

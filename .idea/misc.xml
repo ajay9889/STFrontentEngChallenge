@@ -17,6 +17,8 @@
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/homefragment.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/layout.xml" value="0.13854166666666667" />
+        <entry key="app/src/main/res/layout/loader.xml" value="0.15572916666666667" />
+        <entry key="app/src/main/res/layout/mobilenumberfragment.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/otpfragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/register.xml" value="0.335" />
         <entry key="app/src/main/res/layout/signin.xml" value="0.25" />

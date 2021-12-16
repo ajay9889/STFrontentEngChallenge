@@ -18,12 +18,19 @@ class SplashFragment : BaseFragment<SplashfragmentBinding>(SplashfragmentBinding
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            // User is signed in
-            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+        if (user != null && !user.phoneNumber.isNullOrBlank()) {
+            if (findNavController().previousBackStackEntry?.destination?.id == R.id.homeFragment){
+                findNavController().popBackStack()
+            }else{
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            }
         } else {
-            // No user is signed in
-            findNavController().navigate(R.id.action_splashFragment_to_registerFrgmnt)
+            // User is not signed in
+            if (findNavController().previousBackStackEntry?.destination?.id == R.id.signinFrgmnt){
+                findNavController().popBackStack()
+            }else{
+                findNavController().navigate(R.id.action_splashFragment_to_signinFrgmnt)
+            }
         }
     }
 }

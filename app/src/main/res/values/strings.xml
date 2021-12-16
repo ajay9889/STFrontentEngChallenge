@@ -8,10 +8,11 @@
     <string name="previous">Previous</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="signin_title">Enter Mobile Number</string>
-    <string name="enter_mobile_number">Enter Mobile Number \n(Account/UserName)</string>
+    <string name="enter_mobile_number">Create New Account</string>
     <string name="already_existing_user">Already have an Account?</string>
     <string name="dont_accnt">Don\'t have an Account?</string>
     <string name="submit">Submit</string>
+    <string name="get_otp">get OTP -></string>
     <string name="register">Register</string>
     <string name="sign_ins">Sign In !</string>
     <string name="sign_up">Sign Up !</string>
@@ -20,12 +21,19 @@
     <string name="signin"><u>Sign In</u>.</string>
 
     <string name="didn_rec_otp">Didn\'t received an OTP?</string>
-    <string name="resendotp"><u>Resend OTP</u>.</string>
+    <string name="resendotp"><u>Resend OTP</u></string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="warning">Oops..</string>
     <string name="net_error">Network error, please check internet connection.</string>
     <string name="normal_error">Try again, Possible no records..!</string>
     <string name="ok_btn">Okay</string>
+
+    <string name="resend_otp_code">Resend OTP in (%d) seconds</string>
+    <string name="invalid_request">Invalid request</string>
+<!--    <string name="invalid_request">Invalid request</string>-->
+
+
+
 
 </resources>
