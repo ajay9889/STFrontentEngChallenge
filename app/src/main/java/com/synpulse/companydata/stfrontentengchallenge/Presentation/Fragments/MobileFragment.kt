@@ -3,8 +3,10 @@ package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
+import android.view.KeyEvent
 import android.view.View
-import androidx.core.os.bundleOf
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
@@ -15,7 +17,8 @@ import com.synpulse.companydata.stfrontentengchallenge.databinding.Mobilenumberf
 import org.koin.android.ext.android.inject
 
 class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(MobilenumberfragmentBinding::inflate) {
-    val userSignInViewModel: UserSignInViewModel by inject()
+    val mobileOTPViewModel: UserSignInViewModel by inject()
+
     var dialog: ProgressDialog? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,8 +35,26 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
         with(viewBinding){
             btnOTP.setOnClickListener {
                 if(validateField())
-                    userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
+                    mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
             }
+            editTextPhone.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+                override fun onEditorAction(
+                    v: TextView?,
+                    actionId: Int,
+                    event: KeyEvent?
+                ): Boolean {
+                    event?.let {
+                        if (actionId == EditorInfo.IME_ACTION_DONE
+                            || event.getAction() == KeyEvent.ACTION_DOWN
+                            || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if(validateField())
+                                mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            })
         }
     }
     fun validateField(): Boolean{
@@ -44,7 +65,7 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                 editTextPhone.setError("Enter Mobile Number")
                 editTextPhone.isFocusable =true
                 return false
-            }else if(PhoneNumberUtils.isGlobalPhoneNumber(editTextPhone.text.toString()))
+            }else if(!PhoneNumberUtils.isGlobalPhoneNumber(editTextPhone.text.toString()))
             {
                 editTextPhone.setError("Enter Valid Mobile Number")
                 editTextPhone.isFocusable =true
@@ -55,24 +76,34 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
     }
 
     fun observData(){
-        userSignInViewModel.registeredUserInfo.observe(viewLifecycleOwner , {
+        mobileOTPViewModel.registeredUserInfo.observe(viewLifecycleOwner , {
             when(it){
                 is ViewState.Loading -> {
                     dialog?.show()
                 }
+                is ViewState.verificationCodeToken -> {
+                    dialog?.cancel()
+                }
                 is ViewState.Content -> {
                     dialog?.cancel()
                     with(viewBinding){
-                        val bundle = bundleOf("mobilenumber" to editTextPhone.text.toString())
-                        findNavController().navigate(R.id.action_mobileFragment_to_otpFragment ,bundle)
+                        findNavController().navigate(R.id.action_mobileFragment_to_otpFragment ,Bundle().apply {
+                            putString("mobilenumber" , editTextPhone.text.toString())
+                            putParcelable("tokenPAP" ,mobileOTPViewModel.tokenPAP)
+                            putString("verificationPhoneId" ,mobileOTPViewModel.verificationPhoneId)
+                        })
                     }
-
+                }
+                is ViewState.Message -> {
+                    dialog?.cancel()
+                    it.message.let { msg ->
+                        DsAlert.showAlert(requireActivity(), getString(R.string.warning), msg,"Okay")
+                    }
                 }
                 is ViewState.Error -> {
                     dialog?.cancel()
-                    it.t.message?.let { it1 ->
-                        DsAlert.showAlert(requireActivity(), getString(R.string.warning),
-                            it1,"Okay")
+                    it.t.message?.let { message ->
+                        DsAlert.showAlert(requireActivity(), getString(R.string.warning), message,"Okay")
                     }
                 }
             }

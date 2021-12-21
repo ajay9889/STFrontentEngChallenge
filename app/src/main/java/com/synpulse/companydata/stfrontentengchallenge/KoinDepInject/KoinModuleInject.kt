@@ -46,7 +46,8 @@ val appModule = module {
 
 }
 val viewModelModule = module {
-    single {
+    viewModel {
         UserSignInViewModel(androidApplication() as MainApplication)
     }
+
 }

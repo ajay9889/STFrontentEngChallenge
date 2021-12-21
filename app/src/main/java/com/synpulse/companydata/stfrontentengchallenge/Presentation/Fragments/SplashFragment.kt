@@ -18,7 +18,8 @@ class SplashFragment : BaseFragment<SplashfragmentBinding>(SplashfragmentBinding
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
-        if (user != null && !user.phoneNumber.isNullOrBlank()) {
+//                && !user.phoneNumber.isNullOrBlank()
+        if (user != null ) {
             if (findNavController().previousBackStackEntry?.destination?.id == R.id.homeFragment){
                 findNavController().popBackStack()
             }else{

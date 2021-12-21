@@ -9,5 +9,7 @@ import com.synpulse.companydata.stfrontentengchallenge.databinding.SigninBinding
 class HomeFragment : BaseFragment<HomefragmentBinding>(HomefragmentBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
     }
 }

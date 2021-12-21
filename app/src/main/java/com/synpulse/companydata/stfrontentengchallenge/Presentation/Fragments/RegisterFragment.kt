@@ -54,7 +54,7 @@ class RegisterFragment : BaseFragment<RegisterBinding>(RegisterBinding::inflate)
                 editTextEmail.setError("Enter Email")
                 editTextEmail.isFocusable =true
                 return false
-            }else if(Utils.isValidEmail(editTextEmail.text.toString()))
+            }else if(!Utils.isValidEmail(editTextEmail.text.toString()))
              {
                editTextEmail.setError("Enter Valid Email")
                editTextEmail.isFocusable =true
@@ -87,6 +87,13 @@ class RegisterFragment : BaseFragment<RegisterBinding>(RegisterBinding::inflate)
                         findNavController().popBackStack()
                     }else{
                         findNavController().navigate(R.id.action_registerFrgmnt_to_mobileFragment)
+                    }
+                }
+                is ViewState.Message -> {
+                    dialog?.cancel()
+                    it.message.let { msg ->
+                        DsAlert.showAlert(requireActivity(), getString(R.string.warning),
+                            msg,"Okay")
                     }
                 }
                 is ViewState.Error -> {

@@ -11,7 +11,4 @@ sealed class ViewState<T>{
     data class Message<T>(val message: String): ViewState<T>()
     data class phoneAuthCredential<T>(val mPhoneAuthCredential: PhoneAuthCredential): ViewState<T>()
     data class verificationCodeToken<T>(val mPair: Pair<String, PhoneAuthProvider.ForceResendingToken>): ViewState<T>()
-
-
-
 }

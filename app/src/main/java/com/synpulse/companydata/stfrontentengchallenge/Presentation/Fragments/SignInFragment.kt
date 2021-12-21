@@ -3,7 +3,10 @@ package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -37,6 +40,31 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
                 if(validateField())
                     userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
             }
+
+            editTextPhone.setOnEditorActionListener(object :TextView.OnEditorActionListener{
+                override fun onEditorAction(
+                    v: TextView?,
+                    actionId: Int,
+                    event: KeyEvent?
+                ): Boolean {
+                    event?.let {
+                        if (actionId == EditorInfo.IME_ACTION_DONE
+                            || event.getAction() == KeyEvent.ACTION_DOWN
+                            || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if(validateField())
+                                userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            })
+            signUp.setOnClickListener {
+                findNavController().navigate(R.id.action_signin_to_register)
+            }
+
+
         }
     }
     fun validateField(): Boolean{
@@ -47,7 +75,7 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
                 editTextPhone.setError("Enter Mobile Number")
                 editTextPhone.isFocusable =true
                 return false
-            }else if(PhoneNumberUtils.isGlobalPhoneNumber(editTextPhone.text.toString()))
+            }else if(!PhoneNumberUtils.isGlobalPhoneNumber(editTextPhone.text.toString()))
             {
                 editTextPhone.setError("Enter Valid Mobile Number")
                 editTextPhone.isFocusable =true
@@ -70,13 +98,23 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
                 is ViewState.verificationCodeToken -> {
                     dialog?.cancel()
                     with(viewBinding){
-                        val bundle = bundleOf("mobilenumber" to editTextPhone.text.toString())
-                        findNavController().navigate(R.id.action_signinFrgmnt_to_otpFragment ,bundle)
+                        findNavController().navigate(R.id.action_signinFrgmnt_to_otpFragment ,Bundle().apply {
+                            putString("mobilenumber" , editTextPhone.text.toString())
+                            putParcelable("tokenPAP" ,userSignInViewModel.tokenPAP)
+                            putString("verificationPhoneId" ,userSignInViewModel.verificationPhoneId)
+                        })
                     }
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
                     findNavController().navigate(R.id.action_signinFrgmnt_to_homeFragment)
+                }
+                is ViewState.Message -> {
+                    dialog?.cancel()
+                    it.message?.let { it1 ->
+                        DsAlert.showAlert(requireActivity(), getString(R.string.warning),
+                            it1,"Okay")
+                    }
                 }
                 is ViewState.Error -> {
                     dialog?.cancel()

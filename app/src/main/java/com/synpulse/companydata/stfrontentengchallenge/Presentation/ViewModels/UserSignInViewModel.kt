@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit
 
 class UserSignInViewModel (val application: MainApplication): AndroidViewModel(application){
     private var TAG= "FirebaseAuth"
+    var tokenPAP: PhoneAuthProvider.ForceResendingToken?=null;
+    var verificationPhoneId: String?=null;
     public val registeredUserInfo =MutableLiveData<ViewState<FirebaseUser>>()
     private var authFb: FirebaseAuth
     init {
@@ -83,6 +85,8 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
                         registeredUserInfo.postValue(ViewState.Message("Invalid request"))
                     } else if (e is FirebaseTooManyRequestsException) {
                         registeredUserInfo.postValue(ViewState.Message("The SMS quota for the project has been exceeded"))
+                    }else{
+                        registeredUserInfo.postValue(ViewState.Message("The format of the phone number provided is incorrect"))
                     }
                 }
                 override fun onCodeSent(verificationId: String,token: PhoneAuthProvider.ForceResendingToken) {
@@ -95,8 +99,8 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
 
     fun onPhoneNumberVerificationsIn(activity: Activity , phoneNumber: String){
         val options = PhoneAuthOptions.newBuilder(authFb)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(activity)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
@@ -116,6 +120,8 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
                 }
                 override fun onCodeSent(verificationId: String,token: PhoneAuthProvider.ForceResendingToken) {
                     Log.d(TAG, "onCodeSent:$verificationId")
+                    tokenPAP =token
+                    verificationPhoneId = verificationId
                     registeredUserInfo.postValue(ViewState.verificationCodeToken(Pair(verificationId, token)))
                 }
             }).build()
@@ -138,11 +144,10 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
                     }
                 } else {
                     registeredUserInfo.postValue(task.exception?.let { it1 ->
-                        ViewState.Error(
-                            it1.fillInStackTrace())
+                        ViewState.Error(it1.fillInStackTrace())
                     })
                     // Sign in failed, display a message and update the UI
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Log.w(TAG, "signInWithCredential", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
                     }

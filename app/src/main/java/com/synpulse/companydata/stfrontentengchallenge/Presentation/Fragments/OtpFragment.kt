@@ -4,10 +4,8 @@ import android.app.ProgressDialog
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.telephony.PhoneNumberUtils
-import android.text.Html
+import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.PhoneAuthProvider
 import com.synpulse.companydata.Core.apputils.DsAlert
@@ -16,13 +14,13 @@ import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.U
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.ViewState
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.OtpfragmentBinding
-import com.synpulse.companydata.stfrontentengchallenge.databinding.RegisterBinding
 import org.koin.android.ext.android.inject
 
 class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate) {
-    val userSignInViewModel: UserSignInViewModel by inject()
-     var token: PhoneAuthProvider.ForceResendingToken?=null;
+    val mobileOTPViewModel: UserSignInViewModel by inject()
     lateinit var enteredMobileNumber: String ;
+    var tokenPAP: PhoneAuthProvider.ForceResendingToken?=null;
+    var verificationPhoneId: String?=null;
     var dialog: ProgressDialog? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,17 +34,28 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
     }
     fun setUp(){
         enteredMobileNumber= arguments?.getString("mobilenumber").toString()
+        (arguments?.getParcelable<PhoneAuthProvider.ForceResendingToken>("tokenPAP"))?.let{
+            mobileOTPViewModel.tokenPAP = it
+        }
+        arguments?.getString("verificationPhoneId")?.let{
+            mobileOTPViewModel.verificationPhoneId = it
+        }
+        Log.d("VERIFICATION _1" ,""+tokenPAP);
+        Log.d("VERIFICATION _2" ,""+arguments);
+        Log.d("VERIFICATION _3",""+verificationPhoneId);
         dialog = DsAlert.onCreateDialog(requireContext())
         dialog?.cancel()
         with(viewBinding){
             resendOTP.setOnClickListener {
-                token?.let {
-                    userSignInViewModel.onResendForOTP(requireActivity(), enteredMobileNumber, it);
+                mobileOTPViewModel.tokenPAP?.let {
+                    mobileOTPViewModel.onResendForOTP(requireActivity(), enteredMobileNumber, it);
                 }
             }
             btnSubmit.setOnClickListener {
-                if(validateField())
-                    userSignInViewModel.verifyEnteredCode(requireActivity(), enteredMobileNumber, verifyOTP.text.toString() );
+                mobileOTPViewModel.verificationPhoneId?.let {
+                    if(validateField())
+                        mobileOTPViewModel.verifyEnteredCode(requireActivity(), it ,verifyOTP.text.toString() );
+                }
             }
         }
     }
@@ -77,22 +86,28 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
     }
 
     fun observData(){
-        userSignInViewModel.registeredUserInfo.observe(viewLifecycleOwner , {
+        mobileOTPViewModel.registeredUserInfo.observe(viewLifecycleOwner , {
             when(it){
                 is ViewState.Loading -> {
                     dialog?.show()
                 }
                 is ViewState.phoneAuthCredential -> {
                     dialog?.cancel()
-                    userSignInViewModel.signInWithPhoneAuthCredential(requireActivity(), it.mPhoneAuthCredential);
+                    mobileOTPViewModel.signInWithPhoneAuthCredential(requireActivity(), it.mPhoneAuthCredential);
                 }
                 is ViewState.verificationCodeToken -> {
                     dialog?.cancel()
-
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
                     findNavController().navigate(R.id.action_signinFrgmnt_to_homeFragment)
+                }
+                is ViewState.Message -> {
+                    dialog?.cancel()
+                    it.message.let { msg ->
+                        DsAlert.showAlert(requireActivity(), getString(R.string.warning),
+                            msg,"Okay")
+                    }
                 }
                 is ViewState.Error -> {
                     dialog?.cancel()
