@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -22,13 +23,13 @@ android {
             dimension 'env'
             resValue("string", "app_name", "FinancialInstruments")
             buildConfigField("String", "API_DOMAIN", "\"${api_domain}\"")
-            buildConfigField("String", "API_KEY", "\"${api_key_alphavantage}\"")
+            buildConfigField("String", "API_KEY", api_key_alphavantage)
         }
         staging {
             dimension 'env'
             resValue("string", "app_name", "FinancialInstruments")
             buildConfigField("String", "API_DOMAIN", "\"${api_domain}\"")
-            buildConfigField("String", "API_KEY", "\"${api_key_alphavantage}\"")
+            buildConfigField("String", "API_KEY", api_key_alphavantage)
             api_domain
         }
 
@@ -102,4 +103,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     //chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.opencsv:opencsv:4.6'
+
+
+    def room_version = "2.3.0" // check latest version from docs
+
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }

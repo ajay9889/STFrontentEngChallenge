@@ -32,6 +32,15 @@
     <string name="resend_otp_code">Resend OTP in (%d) seconds</string>
     <string name="invalid_request">Invalid request</string>
 <!--    <string name="invalid_request">Invalid request</string>-->
+    <string name="dashboard_title_toolbar">Dashboard</string>
+    <string name="portfolio_title_toolbar">Portfolio</string>
+
+    <string name="gainlosstitle">Gainers and Lossers</string>
+    <string name="watchlisttitle">Your Watchlist</string>
+
+    <string name="search">Search</string>
+    <string name="search_hint">Search symbols e.g. AAPL, MSFT, NFLX</string>
+    <string name="search_copytext">Search your interests to follow on the NYSE/Nasdaq stock exchanges, learn more information about the stocks, and add them to your portfolio</string>
 
 
 

@@ -1,6 +1,7 @@
 package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.PhoneAuthProvider
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Activity.HomeActivity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.ViewState
 import com.synpulse.companydata.stfrontentengchallenge.R
@@ -22,6 +24,10 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
     var tokenPAP: PhoneAuthProvider.ForceResendingToken?=null;
     var verificationPhoneId: String?=null;
     var dialog: ProgressDialog? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
@@ -100,7 +106,8 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
-                    findNavController().navigate(R.id.action_signinFrgmnt_to_homeFragment)
+                    requireActivity().startActivity(Intent(context, HomeActivity::class.java))
+                    requireActivity().finish()
                 }
                 is ViewState.Message -> {
                     dialog?.cancel()

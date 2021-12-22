@@ -1,10 +1,13 @@
 package com.synpulse.companydata.stfrontentengchallenge.KoinDepInject
 
+import com.mobile.data.usage.Database.Databasehelper
 import com.synpulse.companydata.Core.networkutils.CacheInterceptor
 import com.synpulse.companydata.Core.networkutils.OnlineCacheInterceptor
 import com.synpulse.companydata.stfrontentengchallenge.BuildConfig
+import com.synpulse.companydata.stfrontentengchallenge.DataSource.repository.FinancialDataReposityImpl
 import com.synpulse.companydata.stfrontentengchallenge.MainApplication
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.HomeViewModel
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -20,6 +23,10 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
+    single {
+        Databasehelper.getDatabase(androidContext())
+    }
+
     single{
         OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -43,11 +50,15 @@ val appModule = module {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }
-
+    single {
+        FinancialDataReposityImpl(androidContext() , get())
+    }
 }
 val viewModelModule = module {
     viewModel {
         UserSignInViewModel(androidApplication() as MainApplication)
     }
-
+    viewModel {
+        HomeViewModel(androidApplication() as MainApplication)
+    }
 }

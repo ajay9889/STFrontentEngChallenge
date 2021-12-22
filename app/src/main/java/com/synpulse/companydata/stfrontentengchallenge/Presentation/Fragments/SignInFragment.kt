@@ -1,6 +1,7 @@
 package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.view.KeyEvent
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
 import com.synpulse.companydata.stfrontentengchallenge.Core.Util.Utils
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Activity.HomeActivity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.ViewState
 import com.synpulse.companydata.stfrontentengchallenge.R
@@ -107,7 +109,8 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
-                    findNavController().navigate(R.id.action_signinFrgmnt_to_homeFragment)
+                    requireActivity().startActivity(Intent(context, HomeActivity::class.java))
+                    requireActivity().finish()
                 }
                 is ViewState.Message -> {
                     dialog?.cancel()

@@ -19,6 +19,7 @@ abstract class BaseAppActivity <vb: ViewBinding>(private val infalteRoot: Inflat
         private var _binding: vb?=null
         protected val viewBinding get() = _binding!!
 
+
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
                 _binding =infalteRoot.invoke(layoutInflater);
