@@ -2,10 +2,8 @@ package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
 
 
 import com.google.gson.JsonElement
-import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.json.JSONObject
 
 @Serializable
 data class TimeSerieseData(

@@ -9,6 +9,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.synpulse.companydata.Core.base.BaseAppActivity
+import com.synpulse.companydata.stfrontentengchallenge.Core.base.SingleFragmentActivity
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments.SearchFragment
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.ActivityDashboardBinding
 
@@ -33,7 +35,7 @@ class HomeActivity : BaseAppActivity<ActivityDashboardBinding>(ActivityDashboard
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.search ->{
-
+                SingleFragmentActivity.launchFragment(this@HomeActivity ,SearchFragment.getFragmentInstance())
             }
             else ->{
             }

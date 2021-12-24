@@ -23,6 +23,8 @@ class MainApplication : MultiDexApplication() {
             modules(modules)
         }
         synceApiData()
+//https://github.com/algolia/algoliasearch-client-android
+
     }
 
 

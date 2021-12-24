@@ -105,6 +105,7 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                         DsAlert.showAlert(requireActivity(), getString(R.string.warning), message,"Okay")
                     }
                 }
+                else -> {}
             }
         })
     }

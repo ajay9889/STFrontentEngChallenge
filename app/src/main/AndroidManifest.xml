@@ -28,6 +28,12 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.STFrontentEngChallenge.NoActionBar">
         </activity>
+        <activity
+            android:name=".Core.base.SingleFragmentActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.STFrontentEngChallenge.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
