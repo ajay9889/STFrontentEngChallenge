@@ -16,7 +16,6 @@ import com.synpulse.companydata.stfrontentengchallenge.databinding.ActivityDashb
 
 class HomeActivity : BaseAppActivity<ActivityDashboardBinding>(ActivityDashboardBinding::inflate)
 {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

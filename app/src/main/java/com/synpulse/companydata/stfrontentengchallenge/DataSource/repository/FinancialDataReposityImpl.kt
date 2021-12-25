@@ -17,6 +17,7 @@ import com.synpulse.companydata.stfrontentengchallenge.R
 
 
 import android.content.res.AssetManager
+import io.reactivex.Single
 import java.io.*
 import java.lang.RuntimeException
 
@@ -33,15 +34,8 @@ class FinancialDataReposityImpl(val context: Context, val retrofit: Retrofit): F
         return ViewState.Content(BestSearchMatchesData.getToDomainOnError())
     }
 
-    override suspend fun getQuoteEndpoint(symbol: String): ViewState.Content<GlobalQouteData> {
-            retrofit.create(ApiEndpoints::class.java).historicalFinData(symbol).let {
-                if (it.isSuccessful) {
-                    it.body()?.let {
-                        return ViewState.Content(it)
-                    }
-                }
-            }
-            return ViewState.Content(GlobalQouteData.getToDomainOnError())
+    override fun getQuoteEndpoint(symbol: String): Single<GlobalQouteData> {
+        return retrofit.create(ApiEndpoints::class.java).historicalFinData(symbol)
         }
 
     override suspend fun getDailyData(symbol: String): ViewState.Content<TimeSerieseData> {

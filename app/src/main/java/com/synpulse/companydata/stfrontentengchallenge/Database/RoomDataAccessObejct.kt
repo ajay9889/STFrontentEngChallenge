@@ -1,6 +1,7 @@
 package com.mobile.data.usage.Database
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -26,4 +27,13 @@ interface RoomDataAccessObejct {
 
     @Query("DELETE FROM CompanyListData")
     fun deleteTable()
+
+    @Query("SELECT * FROM CompanyListData where isFollwoing=:isFollwoing")
+    fun getFollowedCompany(isFollwoing: String): PagingSource<Int, CompanyListData>
+
+    @Query("SELECT * FROM CompanyListData LIMIT 1")
+    fun isDataChanged(): LiveData<CompanyListData>
+
+    @Query("SELECT * FROM CompanyListData where isFollwoing='1'")
+    fun isGlobalDataContains(): List<CompanyListData>
 }

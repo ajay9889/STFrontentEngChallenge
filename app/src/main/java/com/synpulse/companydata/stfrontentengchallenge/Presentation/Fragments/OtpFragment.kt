@@ -36,6 +36,7 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        mCountDownTimer.cancel()
         dialog?.cancel()
     }
     fun setUp(){
@@ -93,6 +94,7 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
 
     fun observData(){
         mobileOTPViewModel.registeredUserInfo.observe(viewLifecycleOwner , {
+
             when(it){
                 is ViewState.Loading -> {
                     dialog?.show()
@@ -102,15 +104,18 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
                     mobileOTPViewModel.signInWithPhoneAuthCredential(requireActivity(), it.mPhoneAuthCredential);
                 }
                 is ViewState.verificationCodeToken -> {
+
                     dialog?.cancel()
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
+                    mCountDownTimer.cancel()
                     requireActivity().startActivity(Intent(context, HomeActivity::class.java))
                     requireActivity().finish()
                 }
                 is ViewState.Message -> {
                     dialog?.cancel()
+                    mCountDownTimer.cancel()
                     it.message.let { msg ->
                         DsAlert.showAlert(requireActivity(), getString(R.string.warning),
                             msg,"Okay")
@@ -118,6 +123,7 @@ class OtpFragment : BaseFragment<OtpfragmentBinding>(OtpfragmentBinding::inflate
                 }
                 is ViewState.Error -> {
                     dialog?.cancel()
+                    mCountDownTimer.cancel()
                     it.t.message?.let { it1 ->
                         DsAlert.showAlert(requireActivity(), getString(R.string.warning),
                             it1,"Okay")

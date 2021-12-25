@@ -8,11 +8,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.algolia.search.saas.*
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
 import com.synpulse.companydata.stfrontentengchallenge.BuildConfig
 import com.synpulse.companydata.stfrontentengchallenge.Core.Util.Utils
+import com.synpulse.companydata.stfrontentengchallenge.Core.base.SingleFragmentActivity
+import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.CompanyListAdapter
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.SearchViewModel
 import com.synpulse.companydata.stfrontentengchallenge.databinding.SearchFragmentBinding
@@ -43,6 +46,9 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(SearchFragmentBinding
     }
 
     private fun setTextInputObserver() {
+
+        // setting up the client information for Algolia API to make the smart search suggestion list based on the users input
+
         client = Client(BuildConfig.ALGO_API_KEY, BuildConfig.ALGO_SEARCHAPI_KEY)
         index  = client.getIndex("companydata")
         index.setSettingsAsync(JSONObject().apply {
@@ -139,11 +145,16 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(SearchFragmentBinding
         super.onDestroyView()
         dialog?.cancel()
     }
+
+    fun listItemClicked(companyListData: CompanyListData){
+        SingleFragmentActivity.launchFragment(requireContext() ,DetailsFragment.getFragmentInstance(companyListData))
+    }
     @SuppressLint("CheckResult")
     fun initRecyclerView(){
+        val itemRecords = CompanyListAdapter(requireContext() ,this::listItemClicked)
         with(viewBinding){
            Utils.itemGridListDecore(requireContext(),recyclerviewDashboardHome)
-            val itemRecords = CompanyListAdapter(requireContext())
+
             recyclerviewDashboardHome.adapter=itemRecords
             searchViewModel.getDefaultCompanyList.observe(viewLifecycleOwner , {
                 dialog?.cancel()

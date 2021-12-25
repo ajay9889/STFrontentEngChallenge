@@ -7,6 +7,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.synpulse.companydata.Core.base.BaseAppActivity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments.DashBoardHomeFragment
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments.DetailsFragment
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments.SearchFragment
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.ActivitySingleFragmentBinding
@@ -34,6 +35,9 @@ class SingleFragmentActivity:  BaseAppActivity<ActivitySingleFragmentBinding>(Ac
                 if(mFragment is SearchFragment)
                 add<SearchFragment>(R.id.fragment_container_view,
                     args = intent.getBundleExtra(EX_BUNDLE))
+                if(mFragment is DetailsFragment)
+                    add<DetailsFragment>(R.id.fragment_container_view,
+                        args = intent.getBundleExtra(EX_BUNDLE))
                 if(mFragment is DashBoardHomeFragment)
                     add<DashBoardHomeFragment>(R.id.fragment_container_view,
                         args = intent.getBundleExtra(EX_BUNDLE))

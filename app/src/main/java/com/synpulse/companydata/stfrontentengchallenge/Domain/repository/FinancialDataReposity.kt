@@ -5,12 +5,13 @@ import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.Company
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.GlobalQouteData
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.TimeSerieseData
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.ViewState
+import io.reactivex.Single
 
 interface FinancialDataReposity {
 
     suspend fun getSearchEndpoint(keywords: String) : ViewState.Content<BestSearchMatchesData?>
 
-    suspend fun getQuoteEndpoint(symbol: String):ViewState.Content<GlobalQouteData>
+     fun getQuoteEndpoint(symbol: String): Single<GlobalQouteData>
 
     suspend fun getDailyData(symbol: String) :ViewState.Content<TimeSerieseData>
 
