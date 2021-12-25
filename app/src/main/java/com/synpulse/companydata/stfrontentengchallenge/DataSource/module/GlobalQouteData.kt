@@ -1,12 +1,9 @@
 package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class GlobalQouteData(
-    @SerialName("Global Quote")
+    @SerializedName("Global Quote")
     val globalQuote: GlobalQuote?
 ){
     companion object{

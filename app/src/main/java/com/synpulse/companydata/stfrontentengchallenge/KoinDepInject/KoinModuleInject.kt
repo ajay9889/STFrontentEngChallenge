@@ -8,6 +8,7 @@ import com.synpulse.companydata.stfrontentengchallenge.DataSource.repository.Fin
 import com.synpulse.companydata.stfrontentengchallenge.MainApplication
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.HomeViewModel
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.SearchViewModel
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -59,6 +60,11 @@ val viewModelModule = module {
         UserSignInViewModel(androidApplication() as MainApplication)
     }
     viewModel {
-        HomeViewModel(androidApplication() as MainApplication)
+        HomeViewModel(androidApplication() as MainApplication, get())
     }
+    viewModel {
+        SearchViewModel(androidApplication() as MainApplication, get())
+    }
+
+
 }

@@ -2,14 +2,12 @@ package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
 
 
 import com.google.gson.JsonElement
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class TimeSerieseData(
-    @SerialName("Meta Data")
+    @SerializedName("Meta Data")
     val metaData: MetaData?=null,
-    @SerialName("Time Series (Daily)")
+    @SerializedName("Time Series (Daily)")
     val time_series_data: JsonElement?=null
 ){
     companion object{

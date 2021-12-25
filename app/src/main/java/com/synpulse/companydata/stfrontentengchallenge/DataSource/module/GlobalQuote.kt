@@ -1,27 +1,27 @@
 package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
+import com.google.gson.annotations.SerializedName
+
+
 data class GlobalQuote(
-    @SerialName("09. change")
+    @SerializedName("09. change")
     val change: String?,
-    @SerialName("10. change percent")
+    @SerializedName("10. change percent")
     val changePercent: String?,
-    @SerialName("03. high")
+    @SerializedName("03. high")
     val high: String?,
-    @SerialName("07. latest trading day")
+    @SerializedName("07. latest trading day")
     val latestTradingDay: String?,
-    @SerialName("04. low")
+    @SerializedName("04. low")
     val low: String?,
-    @SerialName("02. open")
+    @SerializedName("02. open")
     val `open`: String?,
-    @SerialName("08. previous close")
+    @SerializedName("08. previous close")
     val previousClose: String?,
-    @SerialName("05. price")
+    @SerializedName("05. price")
     val price: String?,
-    @SerialName("01. symbol")
+    @SerializedName("01. symbol")
     val symbol: String?,
-    @SerialName("06. volume")
+    @SerializedName("06. volume")
     val volume: String?
 )

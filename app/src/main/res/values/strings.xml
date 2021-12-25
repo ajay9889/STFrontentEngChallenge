@@ -42,7 +42,7 @@
     <string name="search_hint">Search symbols e.g. AAPL, MSFT, NFLX</string>
     <string name="search_copytext">Search your interests to follow on the NYSE/Nasdaq stock exchanges, learn more information about the stocks, and add them to your portfolio</string>
 
-
-
+    <string name="followed">Followed</string>
+    <string name="add_follow">+ Follow</string>
 
 </resources>

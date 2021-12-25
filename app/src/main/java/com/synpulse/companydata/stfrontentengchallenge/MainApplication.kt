@@ -5,6 +5,7 @@ import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import com.synpulse.companydata.stfrontentengchallenge.KoinDepInject.appModule
 import com.synpulse.companydata.stfrontentengchallenge.KoinDepInject.viewModelModule
+import com.synpulse.companydata.stfrontentengchallenge.Workmanager.SyncCompanyData
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -22,7 +23,7 @@ class MainApplication : MultiDexApplication() {
             androidContext(this@MainApplication)
             modules(modules)
         }
-        synceApiData()
+//        synceApiData()
 //https://github.com/algolia/algoliasearch-client-android
 
     }
@@ -30,16 +31,16 @@ class MainApplication : MultiDexApplication() {
 
 
     private fun synceApiData() {
-//        val mWorkManager = WorkManager.getInstance(this)
-//        mWorkManager.cancelAllWorkByTag(SyncMobileDataUsage.WORK_INFO_MANAGER_KEY)
-//        val mConstraints = Constraints.Builder()
-//            .setRequiredNetworkType(NetworkType.CONNECTED)
-//            .build()
-//        val uploadWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(SyncMobileDataUsage::class.java)
-//            .setConstraints(mConstraints)
-//            .addTag(SyncMobileDataUsage.WORK_INFO_MANAGER_KEY)
-//            .build()
-//        mWorkManager.enqueue(uploadWorkRequest)
+        val mWorkManager = WorkManager.getInstance(this)
+        mWorkManager.cancelAllWorkByTag(SyncCompanyData.WORK_INFO_MANAGER_KEY)
+        val mConstraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val uploadWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(SyncCompanyData::class.java)
+            .setConstraints(mConstraints)
+            .addTag(SyncCompanyData.WORK_INFO_MANAGER_KEY)
+            .build()
+        mWorkManager.enqueue(uploadWorkRequest)
     }
 
     override fun attachBaseContext(base: Context) {

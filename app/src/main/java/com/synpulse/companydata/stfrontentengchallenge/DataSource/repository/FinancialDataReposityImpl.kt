@@ -3,6 +3,7 @@ package com.synpulse.companydata.stfrontentengchallenge.DataSource.repository
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toFile
 import com.synpulse.companydata.ApiService.ApiEndpoints
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.BestSearchMatchesData
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
@@ -13,12 +14,15 @@ import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.V
 import retrofit2.Retrofit
 import com.opencsv.CSVReader
 import com.synpulse.companydata.stfrontentengchallenge.R
-import java.io.File
-import java.io.FileReader
+
+
+import android.content.res.AssetManager
+import java.io.*
+import java.lang.RuntimeException
 
 
 class FinancialDataReposityImpl(val context: Context, val retrofit: Retrofit): FinancialDataReposity {
-    override suspend fun getSearchEndpoint(keywords: String): ViewState.Content<BestSearchMatchesData> {
+    override suspend fun getSearchEndpoint(keywords: String): ViewState.Content<BestSearchMatchesData?> {
         retrofit.create(ApiEndpoints::class.java).searchFinAPi(keywords).let {
             if (it.isSuccessful) {
                 it.body()?.let {
@@ -51,21 +55,36 @@ class FinancialDataReposityImpl(val context: Context, val retrofit: Retrofit): F
             return ViewState.Content(TimeSerieseData.getToDomainOnError())
     }
 
-    override suspend fun getCompanyList(symbol: String): List<CompanyListData> {
-        val reader = CSVReader(FileReader("file:///android_res/raw/listing_status.csv"))
-        var newItemd= arrayListOf<CompanyListData>()
-        reader.readAll()?.map {
-            Log.d("DATA" , "$it")
-            newItemd.add(
-                CompanyListData(
-                    symbol = it[0],
-                    name = it[0],
-                    gainloss = "+10",
-                    iconImage="",
-                    isFollwoing="0"
-                )
-            )
+
+    override suspend fun getCompanyList(): List<CompanyListData> {
+        var resultList= arrayListOf<CompanyListData>()
+        val inputStream: InputStream? = context.getResources().openRawResource(R.raw.listing_status)
+
+        if(inputStream==null) return resultList
+
+        try {
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            var csvLine: String?=""
+            while (reader.readLine().also { csvLine = it } != null) {
+                csvLine?.split(",".toRegex())?.toTypedArray()?.let { row->
+                    row.get(0).trim().let{
+                        if(it.length>0){
+                            resultList.add(CompanyListData(
+                                symbol = it,
+                                name = it,
+                                gainloss = "+10",
+                                iconImage="",
+                                isFollwoing="0"
+                            ))
+                        }
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            throw RuntimeException("Error in reading CSV file: $ex")
+        } finally {
+            inputStream.close()
         }
-       return newItemd
+       return resultList
     }
 }

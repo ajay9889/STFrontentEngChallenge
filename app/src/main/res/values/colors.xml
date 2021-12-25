@@ -16,7 +16,7 @@
     <color name="dark_grey">#2E2E2E</color>
     <color name="grey">#7E7E7E</color>
 
-
+    <color name="grey_">#EEEEEE</color>
     <color name="transparent">#00000000</color>
 
     <color name="grey_transparent_layout">#10000000</color>
