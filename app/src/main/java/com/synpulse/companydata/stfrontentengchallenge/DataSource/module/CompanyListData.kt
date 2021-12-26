@@ -49,11 +49,5 @@ data class CompanyListData(
                 },
                  behaviourObject =behaviourObject,
         )
-
-        fun CompanyListData.toHomeGlobalDomain()= HomeGlobalQouteData(
-            title= "Items",
-            category_type = SectionType.ROW,
-            companyData =this
-        )
     }
 }

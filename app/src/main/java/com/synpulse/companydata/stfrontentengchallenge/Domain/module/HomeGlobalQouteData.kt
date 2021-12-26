@@ -9,7 +9,8 @@ data class HomeGlobalQouteData(
     val companyData: CompanyListData?=null,
 )
 enum class SectionType{
-    HEADER,
+    GAINERS,
+    WATCHLIST,
     TITLE,
     ROW
 }

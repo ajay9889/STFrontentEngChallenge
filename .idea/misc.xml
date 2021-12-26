@@ -30,6 +30,7 @@
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/homefragment.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/item_companylist.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/item_dahsboard_row.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/item_dsrow.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/item_gainloass.xml" value="0.140625" />
         <entry key="app/src/main/res/layout/item_ganerloaser.xml" value="0.15572916666666667" />

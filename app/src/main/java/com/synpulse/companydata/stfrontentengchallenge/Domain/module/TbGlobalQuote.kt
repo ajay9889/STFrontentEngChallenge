@@ -19,12 +19,6 @@ data class TbGlobalQuote(
     val volume: String
 ): Serializable {
     companion object{
-        fun TbGlobalQuote.toHomeGlobalDomain()= HomeGlobalQouteData(
-            title= "Items",
-            category_type = SectionType.ROW,
-            tbGlobalQuote =this,
-            companyData =null
-        )
 
         fun TbGlobalQuote.toGlobalQoutes()= CompanyListData(
             symbol = this.symbol,

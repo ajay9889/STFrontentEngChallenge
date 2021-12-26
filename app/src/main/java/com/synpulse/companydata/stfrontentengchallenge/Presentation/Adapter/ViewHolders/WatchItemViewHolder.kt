@@ -13,14 +13,14 @@ import org.koin.java.KoinJavaComponent
 class WatchItemViewHolder (viewGroup: ViewGroup,
      val clickItemList:((CompanyListData)->Unit)?=null): BaseViewHolder <ItemDsrowBinding> (viewGroup ,ItemDsrowBinding::inflate ) {
     @SuppressLint("CheckResult")
-    fun bindView( homeGlobalQouteData: HomeGlobalQouteData){
+    fun bindView( companyData: CompanyListData){
         with(viewBinding){
-            gain.text = homeGlobalQouteData.companyData?.gainloss
-            name.text = homeGlobalQouteData.companyData?.name
-            symbol.text = homeGlobalQouteData.companyData?.symbol
-            date.text = "Trading Date: ${homeGlobalQouteData.companyData?.trade_date}"
+            gain.text = companyData?.gainloss
+            name.text = companyData?.name
+            symbol.text = companyData?.symbol
+            date.text = "Trading Date: ${companyData?.trade_date}"
             linItem.setOnClickListener {
-                clickItemList?.invoke(homeGlobalQouteData.companyData!!)
+                clickItemList?.invoke(companyData!!)
             }
         }
     }

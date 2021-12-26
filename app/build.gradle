@@ -27,15 +27,6 @@ android {
             buildConfigField("String", "ALGO_API_KEY", APIKEY_ALGO)
             buildConfigField("String", "ALGO_SEARCHAPI_KEY", SEARCHAPIKEY_ALGO)
         }
-        staging {
-            dimension 'env'
-            resValue("string", "app_name", "FinancialInstruments")
-            buildConfigField("String", "API_DOMAIN", "\"${api_domain}\"")
-            buildConfigField("String", "API_KEY", api_key_alphavantage)
-            buildConfigField("String", "ALGO_API_KEY", APIKEY_ALGO)
-            buildConfigField("String", "ALGO_SEARCHAPI_KEY", SEARCHAPIKEY_ALGO)
-            api_domain
-        }
 
     }
     buildTypes {
@@ -43,6 +34,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

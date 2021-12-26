@@ -9,56 +9,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.HomeGlobalQouteData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.SectionType
+import com.synpulse.companydata.stfrontentengchallenge.Domain.module.TbGlobalQuote
 import com.synpulse.companydata.stfrontentengchallenge.Domain.repository.FinancialDataReposity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.GainersLosersItemViewHolder
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.TitleItemViewHolder
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.WatchItemViewHolder
 
 class WatchListAdapter(private val context: Context,
+                       private val itemList: List<Any>,
                        private val onClickItems: ((CompanyListData)->Unit)? =null
-                        ): PagingDataAdapter<HomeGlobalQouteData, RecyclerView.ViewHolder> (DataDifferentiator){
-    object DataDifferentiator: DiffUtil.ItemCallback<HomeGlobalQouteData>(){
-        override fun areItemsTheSame(oldItem: HomeGlobalQouteData, newItem: HomeGlobalQouteData): Boolean {
-            return oldItem.companyData == newItem.companyData
-        }
-        override fun areContentsTheSame(oldItem: HomeGlobalQouteData, newItem: HomeGlobalQouteData): Boolean {
-            return oldItem.companyData == newItem.companyData
-        }
-    }
+                        ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        getItem(position)?.let {
-             if(it.category_type == SectionType.TITLE)
-                 return 0
-            else if(it.tbGlobalQuote!=null){
-                 return 1
+        itemList.get(position).let {
+            if(it is TbGlobalQuote){
+                return 0
             }else{
-                 return 2
-             }
+                return 1
+            }
         }
-        return 2
+        return 1
     }
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-           is TitleItemViewHolder->{
-               getItem(position)?.let { holder.bindView(it) }
-           }
-           is GainersLosersItemViewHolder->{
-               getItem(position)?.let { (holder).bindView( it) }
-           }
-           is WatchItemViewHolder->{
-                getItem(position)?.let { (holder).bindView( it) }
-           }
-        }
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-      Log.d("viewType" ,"$viewType")
         return  when(viewType){
             0->{
-                TitleItemViewHolder(parent)
-            }
-            1->{
-                // dashboard rows
                 GainersLosersItemViewHolder(parent,onClickItems)
             }
             else->{
@@ -67,4 +42,18 @@ class WatchListAdapter(private val context: Context,
             }
         }
     }
+    override fun getItemCount(): Int {
+      return itemList.size
+    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder){
+            is GainersLosersItemViewHolder->{
+                itemList.get(position)?.let { (holder).bindView(it as TbGlobalQuote) }
+            }
+            is WatchItemViewHolder->{
+                itemList.get(position)?.let { (holder).bindView( it as CompanyListData) }
+            }
+        }
+    }
+
 }

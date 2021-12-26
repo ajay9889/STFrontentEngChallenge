@@ -10,6 +10,7 @@ import com.synpulse.companydata.stfrontentengchallenge.Core.Util.Utils
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.CompanyDataItemDomain
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.CompanyDataItemDomain.Companion.toCompanyListDomain
+import com.synpulse.companydata.stfrontentengchallenge.Domain.module.DashboardData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.HomeGlobalQouteData
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.ItemCompanylistBinding
@@ -22,9 +23,9 @@ import java.util.*
 
 class TitleItemViewHolder (viewGroup: ViewGroup): BaseViewHolder <ItemTitleBinding> (viewGroup ,ItemTitleBinding::inflate ) {
     val dbInstance : Databasehelper by KoinJavaComponent.inject(Databasehelper::class.java)
-    fun bindView(homeGlobalQouteData: HomeGlobalQouteData){
+    fun bindView(dashboardData: DashboardData){
         with(viewBinding){
-            title.text = homeGlobalQouteData.title
+            title.text = dashboardData.title
             seaAll.setOnClickListener {
                 DsAlert.showToastMessage(viewGroup.context, viewGroup.context.getString(R.string.show_comming_soon_message))
             }

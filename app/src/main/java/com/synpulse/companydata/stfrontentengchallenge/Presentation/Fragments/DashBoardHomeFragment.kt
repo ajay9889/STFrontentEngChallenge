@@ -11,7 +11,7 @@ import com.synpulse.companydata.Core.base.BaseFragment
 import com.synpulse.companydata.Core.networkutils.NetworkConnectivity
 import com.synpulse.companydata.stfrontentengchallenge.Core.base.SingleFragmentActivity
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
-import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.WatchListAdapter
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.DashboardListAdapter
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.HomeViewModel
 import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.HomeFragmentBinding
@@ -30,8 +30,7 @@ class DashBoardHomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBind
     fun setUPView(){
         dialog = DsAlert.onCreateDialog(requireContext())
         dialog?.show()
-        val adapterL= WatchListAdapter(requireContext(),    this::listItemClicked)
-        //    Utils.itemGridListDecore(requireContext(),recyclerviewDashboardHome)
+        val adapterL= DashboardListAdapter(requireContext(),    this::listItemClicked)
         with(viewBinding.recyclerviewDashboardHome) {
             adapter = adapterL
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -59,7 +58,7 @@ class DashBoardHomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBind
         with(viewBinding){
             homeViewModel.getPaggingSourceData().subscribe(
                 { pagingdata ->
-                    (recyclerviewDashboardHome.adapter as WatchListAdapter).submitData(
+                    (recyclerviewDashboardHome.adapter as DashboardListAdapter).submitData(
                         lifecycle,
                         pagingdata
                     )
