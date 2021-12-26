@@ -1,6 +1,7 @@
 package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.view.KeyEvent
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Activity.HomeActivity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.ViewState
 import com.synpulse.companydata.stfrontentengchallenge.R
@@ -40,6 +42,7 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                 if(validateField())
                     mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
             }
+
             editTextPhone.setOnEditorActionListener(object : TextView.OnEditorActionListener{
                 override fun onEditorAction(
                     v: TextView?,
@@ -50,8 +53,10 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                         if (actionId == EditorInfo.IME_ACTION_DONE
                             || event.getAction() == KeyEvent.ACTION_DOWN
                             || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if(validateField())
+
+                                if(validateField())
                                 mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
+
                             return true;
                         }
                     }
@@ -86,10 +91,6 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                 }
                 is ViewState.verificationCodeToken -> {
                     dialog?.cancel()
-                }
-
-                is ViewState.Content -> {
-                    dialog?.cancel()
                     with(viewBinding){
                         findNavController().navigate(R.id.action_mobileFragment_to_otpFragment ,Bundle().apply {
                             putString("mobilenumber" , editTextPhone.text.toString())
@@ -97,6 +98,12 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                             putString("verificationPhoneId" ,mobileOTPViewModel.verificationPhoneId)
                         })
                     }
+                }
+
+                is ViewState.Content -> {
+                    dialog?.cancel()
+                    requireActivity().startActivity(Intent(context, HomeActivity::class.java))
+                    requireActivity().finish()
                 }
                 is ViewState.Message -> {
                     dialog?.cancel()

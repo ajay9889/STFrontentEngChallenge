@@ -52,6 +52,7 @@
             android:digits="0123456789+"
             android:gravity="center"
             android:textStyle="bold"
+            android:imeActionId="6"
             android:imeOptions="actionDone"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintBottom_toBottomOf="parent"
