@@ -21,16 +21,21 @@ class SplashFragment : BaseFragment<SplashfragmentBinding>(SplashfragmentBinding
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
 //                && !user.phoneNumber.isNullOrBlank()
-        if (user != null ) {
-            requireActivity().startActivity(Intent(context, HomeActivity::class.java))
-            requireActivity().finish()
-        } else {
-            // User is not signed in
-            if (findNavController().previousBackStackEntry?.destination?.id == R.id.signinFrgmnt){
-                findNavController().popBackStack()
-            }else{
-                findNavController().navigate(R.id.action_splashFragment_to_signinFrgmnt)
+        try{
+            if (user != null ) {
+                requireActivity().startActivity(Intent(context, HomeActivity::class.java))
+                requireActivity().finish()
+            } else {
+                // User is not signed in
+                if (findNavController().previousBackStackEntry?.destination?.id == R.id.signinFrgmnt){
+                    findNavController().popBackStack()
+                }else{
+                    findNavController().navigate(R.id.action_splashFragment_to_signinFrgmnt)
+                }
             }
+        }catch (e:Exception){
+            e.printStackTrace()
+            requireActivity().finish()
         }
     }
 }

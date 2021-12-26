@@ -65,10 +65,11 @@ class FinancialDataReposityImpl(val context: Context, val retrofit: Retrofit): F
                         if(it.length>0){
                             resultList.add(CompanyListData(
                                 symbol = it,
-                                name = it,
-                                gainloss = "+10",
+                                name = row.get(1),
+                                gainloss = if(2<row.size) row.get(2) else "",
                                 iconImage="",
-                                isFollwoing="0"
+                                isFollwoing="0",
+                                trade_date = if((row.size-3)<row.size) row.get(row.size-3) else ""
                             ))
                         }
                     }

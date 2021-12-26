@@ -2,6 +2,7 @@ package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
 
 
 import com.google.gson.annotations.SerializedName
+import com.synpulse.companydata.stfrontentengchallenge.Core.Util.Utils
 
 
 data class BestMatche(
@@ -28,10 +29,11 @@ data class BestMatche(
        public fun BestMatche.getToCompanyDomain() = let {
            CompanyListData(
                symbol = it.symbol!!,
-               name   =  it.symbol!!,
-               gainloss= "",
+               name   =  it.name!!,
+               gainloss= it.type!!,
                iconImage= "",
                isFollwoing= "",
+               trade_date = Utils.getCurrentDate()
            )
        }
     }

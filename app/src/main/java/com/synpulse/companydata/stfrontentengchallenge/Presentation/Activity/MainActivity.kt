@@ -21,7 +21,8 @@ class MainActivity : BaseAppActivity<ActivityMainBinding>(ActivityMainBinding::i
     private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(viewBinding.toolbar)
+//        setSupportActionBar(viewBinding.toolbar)
+        setupToolbar(viewBinding.toolbar,null,"")
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -8,7 +8,7 @@ import com.synpulse.companydata.stfrontentengchallenge.databinding.PorfolioFragm
 class PortFolioFragment : BaseFragment<PorfolioFragmentBinding>(PorfolioFragmentBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

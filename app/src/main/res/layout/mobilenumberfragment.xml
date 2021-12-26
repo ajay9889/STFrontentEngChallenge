@@ -16,6 +16,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/ds_text_size_xxlarge"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

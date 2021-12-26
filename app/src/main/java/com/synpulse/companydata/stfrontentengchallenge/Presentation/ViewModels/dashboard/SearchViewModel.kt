@@ -11,12 +11,10 @@ import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.flowable
 import com.mobile.data.usage.Database.Databasehelper
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.BestMatche.Companion.getToCompanyDomain
-import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData.Companion.toCompanyItemDomain
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.repository.FinancialDataReposityImpl
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.CompanyDataItemDomain
 import com.synpulse.companydata.stfrontentengchallenge.MainApplication
-import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,10 +64,7 @@ class SearchViewModel(val application: MainApplication,
             CompanyListPagingSource(mCList)
         }
     ).flowable.cachedIn(viewModelScope)
-
-
-    class CompanyListPagingSource(val mCList: List<CompanyDataItemDomain>
-    ): PagingSource<Int, CompanyDataItemDomain>() {
+    class CompanyListPagingSource(val mCList: List<CompanyDataItemDomain>): PagingSource<Int, CompanyDataItemDomain>() {
 
         override fun getRefreshKey(state: PagingState<Int, CompanyDataItemDomain>): Int? {
             return state.anchorPosition

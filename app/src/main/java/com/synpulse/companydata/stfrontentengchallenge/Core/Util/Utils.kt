@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.synpulse.companydata.Core.apputils.GridSpacingItemDecoration
 import androidx.core.content.ContextCompat.getSystemService
-
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object Utils {
@@ -44,4 +44,10 @@ object Utils {
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setOnFlingListener(null);
     }
+
+    fun getCurrentDate(): String{
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    }
+
+
 }

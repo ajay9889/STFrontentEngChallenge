@@ -1,10 +1,13 @@
 package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.Menu
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,6 +26,9 @@ import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.FragmentDetailBinding
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
+import android.view.MenuInflater
+import android.view.MenuItem
+
 
 class DetailsFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
     companion object{
@@ -33,6 +39,38 @@ class DetailsFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBindin
             })
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+    var fav: MenuItem? = null
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        fav = menu.add(1,1,1,"Share")
+        fav?.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        fav?.setIcon(R.drawable.ic_baseline_ios_share_24);
+        fav?.setOnMenuItemClickListener(object :MenuItem.OnMenuItemClickListener{
+            override fun onMenuItemClick(item: MenuItem): Boolean {
+               when(item.itemId){
+                   1->{
+                       val sendIntent: Intent = Intent().apply {
+                           action = Intent.ACTION_SEND
+                           putExtra(Intent.EXTRA_TEXT, "Financial instrument informations for "+companyListData.name +"("+ companyListData.symbol+")")
+                           type = "text/plain"
+                       }
+
+                       val shareIntent = Intent.createChooser(sendIntent, "Sharing Trade Interests")
+                       startActivity(shareIntent)
+                       return true
+                   }
+               }
+                return false
+            }
+        })
+    }
+
     var dialog: ProgressDialog? = null
     val homeViewModel: HomeViewModel by inject()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,7 +99,16 @@ class DetailsFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBindin
         homeViewModel.getGlobalQoutes.observe(viewLifecycleOwner , {
            it?.let {
                with(viewBinding){
-                   changePercent.text = it?.globalQuote?.changePercent
+                   it.globalQuote?.let {
+                       it.changePercent?.let {
+                           changePercent.text = it
+                           if(it.contains("-".toRegex())){
+                               changePercent.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                           }
+                       }
+                       homeViewModel.insertGlobalQouteInDb(it)
+                   }
+
                }
            }
         })

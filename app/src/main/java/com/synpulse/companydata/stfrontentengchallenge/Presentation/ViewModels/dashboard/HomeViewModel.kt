@@ -12,6 +12,8 @@ import androidx.paging.rxjava2.flowable
 import com.mobile.data.usage.Database.Databasehelper
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData.Companion.toHomeGlobalDomain
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.GlobalQouteData
+import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.GlobalQuote
+import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.GlobalQuote.Companion.toTbGlobalQoute
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.TimeSerieseData
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.repository.FinancialDataReposityImpl
 import com.synpulse.companydata.stfrontentengchallenge.MainApplication
@@ -40,8 +42,7 @@ class HomeViewModel(val application: MainApplication, val finRepository : Financ
         }
     ).flowable.cachedIn(viewModelScope).map { pager->pager.map {
                it.toHomeGlobalDomain(
-                BehaviorSubject.create(),
-                dbInstance
+                    BehaviorSubject.create()
                )
         }
     }
@@ -61,6 +62,14 @@ class HomeViewModel(val application: MainApplication, val finRepository : Financ
             finRepository.getDailyData(symbol)?.let {
                 getTimeSerieseData.postValue(it)
             }
+        }
+    }
+
+
+    fun insertGlobalQouteInDb(globalQuote: GlobalQuote) {
+        globalQuote.symbol?.let {
+            dbInstance.RoomDataAccessObejct().getUpdateItems(globalQuote.latestTradingDay!! ,it)
+            dbInstance.RoomDataAccessObejct().insertTBGlobalQoute(globalQuote.toTbGlobalQoute())
         }
     }
 }

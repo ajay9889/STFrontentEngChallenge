@@ -17,24 +17,24 @@ import io.reactivex.schedulers.Schedulers
 import org.koin.java.KoinJavaComponent
 import java.util.*
 
-class CompanyItemViewHolder (viewGroup: ViewGroup,
-                             val companyItemSelections:((CompanyListData)->Unit)?=null): BaseViewHolder <ItemCompanylistBinding> (viewGroup ,ItemCompanylistBinding::inflate ) {
+class CompanyItemViewHolder (viewGroup: ViewGroup, val companyItemSelections:((CompanyListData)->Unit)?=null): BaseViewHolder <ItemCompanylistBinding> (viewGroup ,ItemCompanylistBinding::inflate ) {
     val dbInstance : Databasehelper by KoinJavaComponent.inject(Databasehelper::class.java)
     fun bindView(companyListData: CompanyDataItemDomain){
         with(viewBinding){
-            title.text = companyListData.name
+            title.text = companyListData.symbol
             val myColor = Random()
             val color =Color.rgb(myColor.nextInt(255), myColor.nextInt(255), myColor.nextInt(255))
             title.setTextColor(color)
-            compositeDisposable.add(
-                companyListData.behaviourObject.toFlowable(BackpressureStrategy.LATEST).subscribeOn(Schedulers.io())
-                    .doOnNext {
-                        dbInstance.RoomDataAccessObejct().insertSingle(it)
-                    }.observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {it->
-                        it?.let {
+            follow.setOnClickListener {
+                val singleItems=companyListData.toCompanyListDomain(dbInstance)
+                compositeDisposable.add(
+                    companyListData.behaviourObject.toFlowable(BackpressureStrategy.LATEST)
+                        .subscribeOn(Schedulers.io())
+                        .doOnNext {
+                            dbInstance.RoomDataAccessObejct().insertSingle(it)
+                        }.observeOn(AndroidSchedulers.mainThread()).subscribe{
                             with(viewBinding){
-                                if(it.isFollwoing.equals("1")) {
+                                if(singleItems.isFollwoing.equals("1")) {
                                     follow.setTextColor(ContextCompat.getColor(viewGroup.context, R.color.black))
                                     follow.text = viewGroup.context.resources.getString(R.string.followed)
                                 } else {
@@ -43,11 +43,8 @@ class CompanyItemViewHolder (viewGroup: ViewGroup,
                                 }
                             }
                         }
-                    }
-            )
+                )
 
-            follow.setOnClickListener {
-                val singleItems=companyListData.toCompanyListDomain(dbInstance)
                 companyListData.behaviourObject.onNext(singleItems)
             }
             if(companyListData.isFollwoing.equals("1")) {
@@ -57,11 +54,9 @@ class CompanyItemViewHolder (viewGroup: ViewGroup,
                 follow.setTextColor(ContextCompat.getColor(viewGroup.context, R.color.red))
                 follow.text = viewGroup.context.resources.getString(R.string.add_follow)
             }
-
             mainItems.setOnClickListener {
-                companyItemSelections?.invoke(companyListData.toCompanyNormalItemDomain(dbInstance))
+                companyItemSelections?.invoke(companyListData.toCompanyNormalItemDomain())
             }
-
         }
     }
 

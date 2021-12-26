@@ -29,7 +29,6 @@ class DashBoardHomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBind
         dialog = DsAlert.onCreateDialog(requireContext())
         dialog?.show()
        val adapterL= WatchListAdapter(requireContext(),
-            homeViewModel.finRepository,
             this::listItemClicked)
         with(viewBinding){
             with(recyclerviewDashboardHome) {

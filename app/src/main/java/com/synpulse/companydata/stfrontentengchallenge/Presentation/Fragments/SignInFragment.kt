@@ -25,6 +25,10 @@ import org.koin.android.ext.android.inject
 class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
     val userSignInViewModel: UserSignInViewModel by inject()
     var dialog: ProgressDialog? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
@@ -37,7 +41,9 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
     fun setUp(){
         dialog = DsAlert.onCreateDialog(requireContext())
         dialog?.cancel()
+
         with(viewBinding){
+
             buttonSignIN.setOnClickListener {
                 if(validateField())
                     userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );

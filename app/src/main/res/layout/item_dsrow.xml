@@ -43,6 +43,15 @@
                 android:maxLines="1"
                 toop:text="subtitle"
                 android:textSize="@dimen/ds_text_size_medium" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                toop:text="subtitle"
+                android:textSize="@dimen/ds_text_size_small" />
 
         </LinearLayout>
 
@@ -50,7 +59,7 @@
             android:id="@+id/gain"
             android:textColor="@color/green"
             android:textStyle="bold"
-            android:textSize="@dimen/ds_text_size_xlarge"
+            android:textSize="@dimen/ds_text_size_medium"
             android:paddingRight="@dimen/padding_4"
             android:layout_gravity="center"
             android:layout_width="wrap_content"

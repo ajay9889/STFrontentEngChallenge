@@ -15,6 +15,9 @@
             android:name=".Presentation.Activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:recreateOnConfigChanges="mnc"
+            android:windowSoftInputMode="stateUnchanged"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.STFrontentEngChallenge.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +29,18 @@
             android:name=".Presentation.Activity.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:recreateOnConfigChanges="mnc"
+            android:windowSoftInputMode="stateUnchanged"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.STFrontentEngChallenge.NoActionBar">
         </activity>
         <activity
             android:name=".Core.base.SingleFragmentActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:recreateOnConfigChanges="mnc"
+            android:windowSoftInputMode="stateUnchanged"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.STFrontentEngChallenge.NoActionBar">
         </activity>
     </application>

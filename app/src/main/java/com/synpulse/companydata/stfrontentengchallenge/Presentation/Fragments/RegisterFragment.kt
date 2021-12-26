@@ -16,6 +16,10 @@ import org.koin.android.ext.android.inject
 class RegisterFragment : BaseFragment<RegisterBinding>(RegisterBinding::inflate) {
     val userSignInViewModel: UserSignInViewModel by inject()
     var dialog: ProgressDialog? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
@@ -82,12 +86,7 @@ class RegisterFragment : BaseFragment<RegisterBinding>(RegisterBinding::inflate)
                 }
                 is ViewState.Content -> {
                     dialog?.cancel()
-
-                    if (findNavController().previousBackStackEntry?.destination?.id == R.id.mobileFragment){
-                        findNavController().popBackStack()
-                    }else{
-                        findNavController().navigate(R.id.action_registerFrgmnt_to_mobileFragment)
-                    }
+                    findNavController().navigate(R.id.action_registerFrgmnt_to_mobileFragment)
                 }
                 is ViewState.Message -> {
                     dialog?.cancel()

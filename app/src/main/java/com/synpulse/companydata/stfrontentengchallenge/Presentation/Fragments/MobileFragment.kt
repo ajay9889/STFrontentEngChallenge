@@ -19,6 +19,10 @@ import org.koin.android.ext.android.inject
 class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(MobilenumberfragmentBinding::inflate) {
     val mobileOTPViewModel: UserSignInViewModel by inject()
     var dialog: ProgressDialog? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
@@ -83,6 +87,7 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                 is ViewState.verificationCodeToken -> {
                     dialog?.cancel()
                 }
+
                 is ViewState.Content -> {
                     dialog?.cancel()
                     with(viewBinding){

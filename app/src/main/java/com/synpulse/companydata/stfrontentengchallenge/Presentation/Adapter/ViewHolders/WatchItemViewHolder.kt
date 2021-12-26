@@ -14,28 +14,13 @@ class WatchItemViewHolder (viewGroup: ViewGroup,
      val clickItemList:((CompanyListData)->Unit)?=null): BaseViewHolder <ItemDsrowBinding> (viewGroup ,ItemDsrowBinding::inflate ) {
     val dbInstance : Databasehelper by KoinJavaComponent.inject(Databasehelper::class.java)
     @SuppressLint("CheckResult")
-    fun bindView(reposity: FinancialDataReposity, homeGlobalQouteData: HomeGlobalQouteData){
+    fun bindView( homeGlobalQouteData: HomeGlobalQouteData){
         with(viewBinding){
             gain.text = homeGlobalQouteData.companyData?.gainloss
             name.text = homeGlobalQouteData.companyData?.name
             symbol.text = homeGlobalQouteData.companyData?.symbol
+            date.text = "Trading Date: ${homeGlobalQouteData.companyData?.trade_date}"
 
-            /*homeGlobalQouteData.companyData?.let {companyListData->
-                homeGlobalQouteData.behaviourObject?.let {
-                    compositeDisposable.add(
-                        reposity.getQuoteEndpoint(homeGlobalQouteData.companyData.symbol).
-                        subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ globalQoute ->
-                                with(viewBinding){
-                                    gain.text = "$"+globalQoute?.globalQuote?.price
-                                    name.text = "Trading day ${globalQoute?.globalQuote?.latestTradingDay}"
-                                    symbol.text = homeGlobalQouteData.companyData?.symbol
-                                    }
-                                }
-                            ))
-                }
-            }*/
 
             linItem.setOnClickListener {
                 clickItemList?.invoke(homeGlobalQouteData.companyData!!)

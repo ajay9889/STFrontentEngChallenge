@@ -13,7 +13,6 @@ import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.View
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.WatchItemViewHolder
 
 class WatchListAdapter(private val context: Context,
-                       private val reposity: FinancialDataReposity,
                        private val onClickItems: ((CompanyListData)->Unit)? =null
                         ): PagingDataAdapter<HomeGlobalQouteData, RecyclerView.ViewHolder> (DataDifferentiator){
     object DataDifferentiator: DiffUtil.ItemCallback<HomeGlobalQouteData>(){
@@ -37,7 +36,7 @@ class WatchListAdapter(private val context: Context,
                getItem(position)?.let { holder.bindView(it) }
            }
             is WatchItemViewHolder->{
-                getItem(position)?.let { (holder).bindView(reposity, it) }
+                getItem(position)?.let { (holder).bindView( it) }
             }
         }
     }
