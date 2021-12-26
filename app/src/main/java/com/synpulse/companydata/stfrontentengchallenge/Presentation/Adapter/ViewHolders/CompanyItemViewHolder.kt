@@ -22,6 +22,7 @@ class CompanyItemViewHolder (viewGroup: ViewGroup, val companyItemSelections:((C
     fun bindView(companyListData: CompanyDataItemDomain){
         with(viewBinding){
             title.text = companyListData.symbol
+            name.text = companyListData.name
             val myColor = Random()
             val color =Color.rgb(myColor.nextInt(255), myColor.nextInt(255), myColor.nextInt(255))
             title.setTextColor(color)

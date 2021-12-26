@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.algolia.search.saas.*
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
+import com.synpulse.companydata.Core.networkutils.NetworkConnectivity
 import com.synpulse.companydata.stfrontentengchallenge.BuildConfig
 import com.synpulse.companydata.stfrontentengchallenge.Core.Util.Utils
 import com.synpulse.companydata.stfrontentengchallenge.Core.base.SingleFragmentActivity
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.CompanyListAdapter
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.dashboard.SearchViewModel
+import com.synpulse.companydata.stfrontentengchallenge.R
 import com.synpulse.companydata.stfrontentengchallenge.databinding.SearchFragmentBinding
 import io.reactivex.BackpressureStrategy
 import io.reactivex.schedulers.Schedulers
@@ -145,9 +147,13 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(SearchFragmentBinding
         super.onDestroyView()
         dialog?.cancel()
     }
-
     fun listItemClicked(companyListData: CompanyListData){
-        SingleFragmentActivity.launchFragment(requireContext() ,DetailsFragment.getFragmentInstance(companyListData))
+        if(NetworkConnectivity.isNetworkConnected(requireContext())){
+            SingleFragmentActivity.launchFragment(requireContext() ,DetailsFragment.getFragmentInstance(companyListData))
+        }else{
+            DsAlert.showAlert(requireActivity(), getString(R.string.net_error_warning), requireContext().resources.getString(
+                R.string.net_error),"Okay")
+        }
     }
     @SuppressLint("CheckResult")
     fun initRecyclerView(){

@@ -9,6 +9,7 @@ import androidx.room.Query
 import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.CompanyListData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.TbGlobalQuote
 import kotlinx.coroutines.flow.Flow
+import org.jetbrains.annotations.NotNull
 
 
 @Dao
@@ -18,7 +19,7 @@ interface RoomDataAccessObejct {
     fun insert(mCompanyListData: List<CompanyListData>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTBGlobalQoute(mCompanyListData: TbGlobalQuote)
+    fun insertTBGlobalQoute(mTbGlobalQuote: TbGlobalQuote)
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -42,8 +43,12 @@ interface RoomDataAccessObejct {
     @Query("SELECT * FROM CompanyListData where isFollwoing='1'")
     fun isGlobalDataContains(): List<CompanyListData>
 
+    @Query("SELECT * FROM TbGlobalQuote")
+    fun getGlobalQuoteChanges(): List<TbGlobalQuote>
 
+
+    @NotNull
     @Query("UPDATE CompanyListData SET trade_date = :trade_date where symbol=:symbol")
-    fun getUpdateItems(trade_date: String, symbol: String): CompanyListData?
+    fun getUpdateItems(trade_date: String, symbol: String)
 
 }

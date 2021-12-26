@@ -12,7 +12,6 @@ import org.koin.java.KoinJavaComponent
 
 class WatchItemViewHolder (viewGroup: ViewGroup,
      val clickItemList:((CompanyListData)->Unit)?=null): BaseViewHolder <ItemDsrowBinding> (viewGroup ,ItemDsrowBinding::inflate ) {
-    val dbInstance : Databasehelper by KoinJavaComponent.inject(Databasehelper::class.java)
     @SuppressLint("CheckResult")
     fun bindView( homeGlobalQouteData: HomeGlobalQouteData){
         with(viewBinding){
@@ -20,12 +19,9 @@ class WatchItemViewHolder (viewGroup: ViewGroup,
             name.text = homeGlobalQouteData.companyData?.name
             symbol.text = homeGlobalQouteData.companyData?.symbol
             date.text = "Trading Date: ${homeGlobalQouteData.companyData?.trade_date}"
-
-
             linItem.setOnClickListener {
                 clickItemList?.invoke(homeGlobalQouteData.companyData!!)
             }
         }
     }
-
 }

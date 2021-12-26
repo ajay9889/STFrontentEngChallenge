@@ -25,7 +25,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="warning">Oops..</string>
-    <string name="net_error">Network error, please check internet connection.</string>
+    <string name="net_error_warning">Network error!</string>
+    <string name="net_error">Please check internet connection.</string>
     <string name="normal_error">Try again, Possible no records..!</string>
     <string name="ok_btn">Okay</string>
 
@@ -44,5 +45,10 @@
 
     <string name="followed">Followed</string>
     <string name="add_follow">+ Follow</string>
+    <string name="show_comming_soon_message">Comming Soon!</string>
+
+
+    <string name="logout_warn">Logout</string>
+    <string name="logout_msg">Do you want to logout?</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,7 @@ import com.synpulse.companydata.stfrontentengchallenge.DataSource.module.Company
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.HomeGlobalQouteData
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.SectionType
 import com.synpulse.companydata.stfrontentengchallenge.Domain.repository.FinancialDataReposity
+import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.GainersLosersItemViewHolder
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.TitleItemViewHolder
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Adapter.ViewHolders.WatchItemViewHolder
 
@@ -26,27 +28,41 @@ class WatchListAdapter(private val context: Context,
 
     override fun getItemViewType(position: Int): Int {
         getItem(position)?.let {
-            return if(it.category_type == SectionType.TITLE) 0 else 1
+             if(it.category_type == SectionType.TITLE)
+                 return 0
+            else if(it.tbGlobalQuote!=null){
+                 return 1
+            }else{
+                 return 2
+             }
         }
-        return super.getItemViewType(position)
+        return 2
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
            is TitleItemViewHolder->{
                getItem(position)?.let { holder.bindView(it) }
            }
-            is WatchItemViewHolder->{
+           is GainersLosersItemViewHolder->{
+               getItem(position)?.let { (holder).bindView( it) }
+           }
+           is WatchItemViewHolder->{
                 getItem(position)?.let { (holder).bindView( it) }
-            }
+           }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-      return  when(viewType){
+      Log.d("viewType" ,"$viewType")
+        return  when(viewType){
             0->{
                 TitleItemViewHolder(parent)
             }
+            1->{
+                // dashboard rows
+                GainersLosersItemViewHolder(parent,onClickItems)
+            }
             else->{
+                // dashboard rows
                 WatchItemViewHolder(parent,onClickItems)
             }
         }

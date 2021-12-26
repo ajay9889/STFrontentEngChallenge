@@ -3,8 +3,6 @@ package com.synpulse.companydata.stfrontentengchallenge.DataSource.module
 import com.google.gson.annotations.SerializedName
 import com.synpulse.companydata.stfrontentengchallenge.Domain.module.TbGlobalQuote
 import java.io.Serializable
-
-
 data class GlobalQuote(
     @SerializedName("09. change")
     val change: String?,
@@ -29,16 +27,16 @@ data class GlobalQuote(
 ): Serializable{
     companion object{
         fun GlobalQuote.toTbGlobalQoute()=TbGlobalQuote(
-             change=this.change,
-         changePercent=this.changePercent,
-         high=this.high,
-         latestTradingDay=this.latestTradingDay,
-        low = this.low,
-        open=this.open,
-        previousClose=this.previousClose,
-        price=this.price,
-        symbol=this.symbol,
-        volume=this.volume,
+            change=this.change!!,
+            changePercent=this.changePercent!!,
+            high=this.high!!,
+            latestTradingDay=this.latestTradingDay!!,
+            low = this.low!!,
+            open=this.open!!,
+            previousClose=this.previousClose!!,
+            price=this.price!!,
+            symbol=this.symbol!!,
+            volume=this.volume!!,
         )
     }
 }
