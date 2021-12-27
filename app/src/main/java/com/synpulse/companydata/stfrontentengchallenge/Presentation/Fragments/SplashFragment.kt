@@ -2,6 +2,7 @@ package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -20,9 +21,9 @@ class SplashFragment : BaseFragment<SplashfragmentBinding>(SplashfragmentBinding
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
-//                && !user.phoneNumber.isNullOrBlank()
         try{
-            if (user != null ) {
+//            Log.d("USERS" ,"$user , PHONE: ${user?.phoneNumber}")
+            if (user != null && !user.phoneNumber.isNullOrBlank()) {
                 requireActivity().startActivity(Intent(context, HomeActivity::class.java))
                 requireActivity().finish()
             } else {

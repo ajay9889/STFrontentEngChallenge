@@ -2,7 +2,10 @@ package com.synpulse.companydata.stfrontentengchallenge.Presentation.Fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.synpulse.companydata.Core.apputils.DsAlert
 import com.synpulse.companydata.Core.base.BaseFragment
@@ -45,6 +48,22 @@ class RegisterFragment : BaseFragment<RegisterBinding>(RegisterBinding::inflate)
                 if(validateField())
                 userSignInViewModel.onSignup(requireActivity(), editTextEmail.text.toString(),editTextPassword.text.toString())
             }
+
+
+            editTextPassword.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+                override fun onEditorAction(
+                    v: TextView?,
+                    actionId: Int,
+                    event: KeyEvent?
+                ): Boolean {
+                    if (actionId == EditorInfo.IME_ACTION_DONE &&  !editTextPassword.text.toString().isNullOrBlank()) {
+                        if(validateField())
+                            userSignInViewModel.onSignup(requireActivity(), editTextEmail.text.toString(),editTextPassword.text.toString())
+                        return true;
+                    }
+                    return false;
+                }
+            })
         }
     }
 

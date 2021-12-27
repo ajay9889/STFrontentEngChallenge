@@ -56,6 +56,8 @@ class DashBoardHomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBind
     @SuppressLint("CheckResult")
     fun initRecyclerView(){
         with(viewBinding){
+            recyclerviewDashboardHome.invalidate()
+            recyclerviewDashboardHome.invalidateItemDecorations()
             homeViewModel.getPaggingSourceData().subscribe(
                 { pagingdata ->
                     (recyclerviewDashboardHome.adapter as DashboardListAdapter).submitData(

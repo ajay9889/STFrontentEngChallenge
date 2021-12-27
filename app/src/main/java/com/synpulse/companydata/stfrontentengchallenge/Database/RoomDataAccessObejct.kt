@@ -32,7 +32,9 @@ interface RoomDataAccessObejct {
     fun getInsertedItems(symbol: String): CompanyListData?
 
     @Query("DELETE FROM CompanyListData")
-    fun deleteTable()
+    fun clearComapnyData()
+    @Query("DELETE FROM TbGlobalQuote")
+    fun clearTbGlobalQouteComapnyData()
 
     @Query("SELECT * FROM CompanyListData where isFollwoing=:isFollwoing")
     fun getFollowedCompany(isFollwoing: String): PagingSource<Int, CompanyListData>

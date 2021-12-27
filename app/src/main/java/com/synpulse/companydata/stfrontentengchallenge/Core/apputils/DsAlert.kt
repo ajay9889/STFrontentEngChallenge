@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import com.mobile.data.usage.Database.Databasehelper
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.Activity.MainActivity
 import com.synpulse.companydata.stfrontentengchallenge.Presentation.ViewModels.UserSignInViewModel
 import com.synpulse.companydata.stfrontentengchallenge.R
@@ -62,6 +63,7 @@ object DsAlert {
 
     fun showAlertLogout(activity: Activity,
                         userSignInViewModel: UserSignInViewModel,
+                        databasehelper: Databasehelper,
                         title: String,
                         message: String,
                         positiveButton: String): AlertDialog {
@@ -72,9 +74,14 @@ object DsAlert {
             .apply { positiveButton.let { positiveString ->
                 setPositiveButton(positiveString) { dialog, which ->
                     dialog.cancel()
-                    userSignInViewModel.onSignOut()
-                    activity.startActivity(Intent(activity, MainActivity::class.java))
-                    activity.finish()
+                    userSignInViewModel.onSignOut().apply {
+                        // clearing all data
+                        databasehelper.RoomDataAccessObejct().clearComapnyData()
+                        databasehelper.RoomDataAccessObejct().clearTbGlobalQouteComapnyData().apply {
+                            activity.startActivity(Intent(activity, MainActivity::class.java))
+                            activity.finish()
+                        }
+                    }
                 }
                 setNegativeButton("No") { dialog, which ->
                     dialog.cancel()

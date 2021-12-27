@@ -16,12 +16,13 @@ class GainersLosersItemViewHolder (viewGroup: ViewGroup,
     @SuppressLint("CheckResult")
     fun bindView( tbGlobalQuote: TbGlobalQuote){
         with(viewBinding){
-            tbGlobalQuote?.changePercent?.let {
+            tbGlobalQuote.changePercent?.let {
                 changesPerc.text = it
                 if(it.contains("-".toRegex())){
                     changesPerc.setTextColor(ContextCompat.getColor(viewGroup.context, R.color.red))
                 }
             }
+            date.text = "Last trading date on \n${tbGlobalQuote?.latestTradingDay}"
             title.text = tbGlobalQuote?.symbol
             mainItems.setOnClickListener {
                 tbGlobalQuote?.let { it1 -> clickItemList?.invoke(it1.toGlobalQoutes()) }

@@ -55,15 +55,10 @@ class SignInFragment : BaseFragment<SigninBinding>(SigninBinding::inflate) {
                     actionId: Int,
                     event: KeyEvent?
                 ): Boolean {
-                    event?.let {
-                        if (actionId == EditorInfo.IME_ACTION_DONE
-                            || event.getAction() == KeyEvent.ACTION_DOWN
-                            || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if(validateField())
-                                userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
-
-                            return true;
-                        }
+                    if (actionId == EditorInfo.IME_ACTION_DONE &&  !editTextPhone.text.toString().isNullOrBlank()) {
+                        if(validateField())
+                            userSignInViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString());
+                        return true;
                     }
                     return false;
                 }

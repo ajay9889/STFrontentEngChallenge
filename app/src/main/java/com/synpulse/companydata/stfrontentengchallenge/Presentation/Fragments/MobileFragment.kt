@@ -49,17 +49,11 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                     actionId: Int,
                     event: KeyEvent?
                 ): Boolean {
-                    event?.let {
-                        if (actionId == EditorInfo.IME_ACTION_DONE
-                            || event.getAction() == KeyEvent.ACTION_DOWN
-                            || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                                if(validateField())
-                                mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
-
+                        if (actionId == EditorInfo.IME_ACTION_DONE &&  !editTextPhone.text.toString().isNullOrBlank()) {
+                            if(validateField())
+                            mobileOTPViewModel.onPhoneNumberVerificationsIn(requireActivity(), editTextPhone.text.toString() );
                             return true;
                         }
-                    }
                     return false;
                 }
             })
@@ -117,7 +111,9 @@ class MobileFragment : BaseFragment<MobilenumberfragmentBinding>(Mobilenumberfra
                         DsAlert.showAlert(requireActivity(), getString(R.string.warning), message,"Okay")
                     }
                 }
-                else -> {}
+                else -> {
+                    dialog?.cancel()
+                }
             }
         })
     }

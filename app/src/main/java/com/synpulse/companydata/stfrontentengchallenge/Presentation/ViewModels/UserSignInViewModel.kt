@@ -48,6 +48,7 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
 
 
     fun onSignIn(activity: Activity, userName: String, password: String){
+        registeredUserInfo.postValue(ViewState.Loading())
         authFb.signInWithEmailAndPassword(userName, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -67,6 +68,7 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
     }
 
     fun onResendForOTP(activity: Activity , phoneNumber: String, token:PhoneAuthProvider.ForceResendingToken){
+        registeredUserInfo.postValue(ViewState.Loading())
         val options = PhoneAuthOptions.newBuilder(authFb)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
@@ -98,6 +100,7 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
     }
 
     fun onPhoneNumberVerificationsIn(activity: Activity , phoneNumber: String){
+        registeredUserInfo.postValue(ViewState.Loading())
         val options = PhoneAuthOptions.newBuilder(authFb)
             .setPhoneNumber(phoneNumber)
             .setTimeout(60L, TimeUnit.SECONDS)
@@ -136,7 +139,8 @@ class UserSignInViewModel (val application: MainApplication): AndroidViewModel(a
     }
 
      fun signInWithPhoneAuthCredential(activity: Activity, credential: PhoneAuthCredential) {
-        authFb.signInWithCredential(credential)
+         registeredUserInfo.postValue(ViewState.Loading())
+         authFb.signInWithCredential(credential)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     authFb.currentUser?.let {
